@@ -24,7 +24,7 @@ This application supports the following API routes:
 
 Sending a GET request to /emails/<mailbox> where <mailbox> is either inbox, sent, or archive will return back to you (in JSON form) a list of all emails in that mailbox, in reverse chronological order. For example, if you send a GET request to /emails/inbox, you might get a JSON response like the below (representing two emails):
 
-```
+```json
 [
     {
         "id": 100,
@@ -53,7 +53,7 @@ Notice that each email specifies its id (a unique identifier), a sender email ad
 
 How would you get access to such values in JavaScript? Recall that in JavaScript, you can use fetch to make a web request. Therefore, the following JavaScript code
 
-```
+```js
 fetch('/emails/inbox')
 .then(response => response.json())
 .then(emails => {
@@ -72,7 +72,7 @@ Note also that if you request an invalid mailbox (anything other than inbox, sen
 
 Sending a GET request to /emails/email_id where email_id is an integer id for an email will return a JSON representation of the email, like the below:
 
-```
+```json
 {
     "id": 100,
     "sender": "foo@example.com",
@@ -89,7 +89,7 @@ Note that if the email doesn’t exist, or if the user does not have access to t
 
 To get email number 100, for example, you might write JavaScript code like
 
-```
+```js
 fetch('/emails/100')
 .then(response => response.json())
 .then(email => {
@@ -104,7 +104,7 @@ fetch('/emails/100')
 
 So far, we’ve seen how to get emails: either all of the emails in a mailbox, or just a single email. To send an email, you can send a POST request to the /emails route. The route requires three pieces of data to be submitted: a recipients value (a comma-separated string of all users to send an email to), a subject string, and a body string. For example, you could write JavaScript code like
 
-```
+```js
 fetch('/emails', {
   method: 'POST',
   body: JSON.stringify({
@@ -128,7 +128,7 @@ Note that there must be at least one email recipient: if one isn’t provided, t
 
 The final route that you’ll need is the ability to mark an email as read/unread or as archived/unarchived. To do so, send a PUT request (instead of a GET) request to /emails/<email_id> where email_id is the id of the email you’re trying to modify. For example, JavaScript code like
 
-```
+```js
 fetch('/emails/100', {
   method: 'PUT',
   body: JSON.stringify({
@@ -175,7 +175,7 @@ Using JavaScript, HTML, and CSS, complete the implementation of your single-page
 
 - To create an HTML element and add an event handler to it, you can use JavaScript code like the below:
 
-```
+```js
 const element = document.createElement('div');
 element.innerHTML = 'This is the content of the div.';
 element.addEventListener('click', function() {
